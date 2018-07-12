@@ -1,5 +1,5 @@
 # Giftastic
-This is a dynamic web page that uses the GIPHY API to populate the page with gifs of your choice via buttons implemented via JavaScript and jQuery. 
+This is a dynamic web page that uses the GIPHY API to populate the page with gifs of your choice by clicking buttons that were  implemented via JavaScript and jQuery. 
 
 # License
 No license is required.
