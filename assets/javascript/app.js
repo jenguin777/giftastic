@@ -1,11 +1,16 @@
+// Initial array of instruments
+var instruments = ["violin", "trumpet", "clarinet"];
+
+// Render images once button clicked
 // Adding click event listen listener to all buttons
 $("button").on("click", function() {
+  
   // Grabbing and storing the data-instrument property value from the button
-  var instruments = $(this).attr("data-instrument");
+  var buttonInstrument = $(this).attr("data-instrument");
 
   // Constructing a queryURL using the instrument name, limit the images returned to 10
   var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-  instruments + "&api_key=dc6zaTOxFJmzC&limit=10";
+  buttonInstrument + "&api_key=dc6zaTOxFJmzC&limit=10";
 
   // Performing an AJAX request with the queryURL
   $.ajax({
@@ -14,6 +19,9 @@ $("button").on("click", function() {
   })
     // After data comes back from the request
     .then(function(response) {
+      // Deleting the buttons prior to adding new instruments
+      // (this is necessary otherwise you will have repeat buttons)
+      $("#buttons-view").empty();
       console.log(queryURL);
 
       console.log(response);
@@ -41,8 +49,8 @@ $("button").on("click", function() {
         // Setting the data-state attribute of the image to still
         instrumentImage.attr("data-state","still");
         // Appending the paragraph and image tag to the instrumentDiv
-        instrumentDiv.append(p);
         instrumentDiv.append(instrumentImage);
+        instrumentDiv.append(p);
 
         // Prependng the instrumentDiv to the HTML page in the "#gifs-appear-here" div
         $("#gifs-appear-here").prepend(instrumentDiv);
@@ -51,7 +59,7 @@ $("button").on("click", function() {
 });
 
 
-//I do not understand how to 
+// Toggle animation by clicking on image (If still, animate. If animated, make still.)
 $(document).on("click", ".gif",function() {
   // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
   var state = $(this).attr("data-state");
@@ -66,3 +74,52 @@ $(document).on("click", ".gif",function() {
     $(this).attr("data-state", "still");
   }
 });
+
+// Function for displaying instrument buttons
+function renderButtons() {
+
+  // Deleting the buttons prior to adding new instrument buttons
+  // (this is necessary otherwise you will have repeat buttons)
+  $("#buttons-view").empty();
+  // var instruments = [];
+
+  // Looping through the array of instruments
+  for (var i = 0; i < instruments.length; i++) {
+
+    // Then dynamically generating buttons for each instrument in the array
+    // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
+    var a = $("<button>");
+    // Adding a class of instrument to our button
+    a.addClass("data-instrument");
+    // Adding a data-attribute
+    a.attr("data-name", instruments[i]);
+    // Providing the initial button text
+    a.text(instruments[i]);
+    // Adding the button to the buttons-view div
+    $("#buttons-view").append(a);
+  }
+}
+
+// This function handles events where one button is clicked
+$("#add-instrument").on("click", function(event) {
+  // Prevent default behavior of whole page being reloaded
+  event.preventDefault();
+
+  // This line grabs the input from the textbox
+  var instrument = $("#instrument-input").val().trim();
+  console.log(instrument);
+
+  // Adding the movie from the textbox to our array
+  instruments.push(instrument);
+  console.log(instruments);
+
+  // Calling renderButtons which handles the processing of our movie array
+  renderButtons();
+});
+
+// Function for displaying the movie info
+      // Using $(document).on instead of $(".movie").on to add event listeners to dynamically generated elements
+      // $(document).on("click", ".instrument", displayInstrumentInfo);
+
+      // Calling the renderButtons function to display the initial buttons
+      //renderButtons();

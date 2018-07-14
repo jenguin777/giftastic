@@ -16,11 +16,13 @@
             <div class="col-sm-12">
 
                 <!-- Buttons -->
-                <div style="background-color: blueviolet ; color: white;">
-                        <button data-instrument="violin">violin</button>
-                        <button data-instrument="trumpet">trumpet</button>
-                        <button data-instrument="clarinet">clarinet</button>
+                <div>
+                    <button data-instrument="violin">violin</button>
+                    <button data-instrument="trumpet">trumpet</button>
+                    <button data-instrument="clarinet">clarinet</button>
                 </div>
+                <!-- Rendered Buttons will get Dumped Here  -->
+                <div id="buttons-view"></div>
             </div>
         </div>
                 
@@ -32,8 +34,10 @@
             <div class="col-md-3">
                 <form>
                     <div class="form-group">
-                        <label for="usr">Add an instrument:</label>
-                        <input type="text" class="form-control" id="usr">
+                        <label for="instrument-input">Add an instrument:</label>
+                        <input type="text" class="form-control" id="instrument-input">
+                        <!-- Button triggers new movie to be added -->
+                        <input id="add-instrument" type="submit" value="Submit">
                     </div>
                 </form>
             </div>
