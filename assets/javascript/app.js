@@ -1,7 +1,7 @@
 // Initial array of instruments
 var instruments = ["violin", "trumpet", "clarinet"];
 
-// Render images once button clicked
+// Render images for existing buttons when button clicked
 // Adding click event listen listener to all buttons
 $("button").on("click", function() {
   
@@ -58,7 +58,6 @@ $("button").on("click", function() {
     });
 });
 
-
 // Toggle animation by clicking on image (If still, animate. If animated, make still.)
 $(document).on("click", ".gif",function() {
   // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
@@ -75,13 +74,13 @@ $(document).on("click", ".gif",function() {
   }
 });
 
-// Function for displaying instrument buttons
+// Function for displaying instrument new buttons
 function renderButtons() {
 
   // Deleting the buttons prior to adding new instrument buttons
   // (this is necessary otherwise you will have repeat buttons)
   $("#buttons-view").empty();
-  // var instruments = [];
+  console.log("renderButtons instruments array " + instruments);
 
   // Looping through the array of instruments
   for (var i = 0; i < instruments.length; i++) {
@@ -100,7 +99,7 @@ function renderButtons() {
   }
 }
 
-// This function handles events where one button is clicked
+// This function handles events where a newly added button is clicked
 $("#add-instrument").on("click", function(event) {
   // Prevent default behavior of whole page being reloaded
   event.preventDefault();
@@ -117,9 +116,9 @@ $("#add-instrument").on("click", function(event) {
   renderButtons();
 });
 
-// Function for displaying the movie info
-      // Using $(document).on instead of $(".movie").on to add event listeners to dynamically generated elements
-      // $(document).on("click", ".instrument", displayInstrumentInfo);
+// Function for displaying the instrument info
+// Using $(document).on instead of $(".instrument").on to add event listeners to dynamically generated elements
+$(document).on("click", ".instrument", false);
 
-      // Calling the renderButtons function to display the initial buttons
-      //renderButtons();
+// Calling the renderButtons function to display the initial buttons
+// renderButtons();
