@@ -89,11 +89,12 @@ function renderButtons() {
     // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
     var a = $("<button>");
     // Adding a class of instrument to our button
-    a.addClass("data-instrument");
+    a.addClass("instrument-btn");
     // Adding a data-attribute
-    a.attr("data-name", instruments[i]);
+    a.attr("data-instrument", instruments[i]);
     // Providing the initial button text
     a.text(instruments[i]);
+    console.log("a: " + a);
     // Adding the button to the buttons-view div
     $("#buttons-view").append(a);
   }
@@ -106,7 +107,7 @@ $("#add-instrument").on("click", function(event) {
 
   // This line grabs the input from the textbox
   var instrument = $("#instrument-input").val().trim();
-  console.log(instrument);
+  console.log("new button instrument " + instrument);
 
   // Adding the movie from the textbox to our array
   instruments.push(instrument);
@@ -118,7 +119,7 @@ $("#add-instrument").on("click", function(event) {
 
 // Function for displaying the instrument info
 // Using $(document).on instead of $(".instrument").on to add event listeners to dynamically generated elements
-$(document).on("click", ".instrument", false);
+$(document).on("click", ".instrument-btn", false);
 
 // Calling the renderButtons function to display the initial buttons
-// renderButtons();
+renderButtons();
