@@ -1,62 +1,73 @@
 // Initial array of instruments
 var instruments = ["violin", "trumpet", "clarinet"];
 
+// displayInstrumentInfo function re-renders the HTML to display the appropriate content
+function displayInstrumentInfo() {
+    // Grabbing and storing the data-instrument property value from the button
+    var buttonInstrument = $(this).attr("data-name");
+
+    // Constructing a queryURL using the instrument name, limit the images returned to 10
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+    buttonInstrument + "&api_key=dc6zaTOxFJmzC&limit=10";
+
+    // Performing an AJAX request with the queryURL for the clicked button
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    })
+        // After data comes back from the request
+        .then(function(response) {
+          console.log(queryURL);
+          console.log(response);
+          
+          // storing the data from the AJAX request in the results variable
+          var results = response.data;
+
+          // Looping through each result item
+          for (var i = 0; i < results.length; i++) {
+
+            // Creating a div to hold the image
+            var instrumentDiv = $("<div class='instrument'>");
+
+            // Storing the rating data
+            var rating = results[i].rating;
+
+            // Creating an element to have the rating displayed
+            var pOne = $("<p>").text("Rating: " + rating);
+
+            // Displaying the rating
+            instrumentDiv.append(pOne);
+      
+            // Retrieving the URL for the image
+            var imageURL = results[i].images.original_still.url;
+
+            // Creating an <img> element to hold the image
+            var image = $("<img>").attr("src", imageURL);
+
+            // Setting the data-still attribute of the image
+            image.attr("data-still", results[i].images.original_still.url);
+            // Setting the data-animate attribute of the image
+            image.attr("data-animate", results[i].images.fixed_height.url);
+            // Setting the data-state attribute of the image to still
+            image.attr("data-state","still");
+            // Adding class gif for the click to animate / still piece
+            image.addClass("gif");
+              
+            // Appending image tag to the instrumentDiv
+            instrumentDiv.append(image);
+            
+            // Prependng the instrumentDiv to the HTML page in the gifs-appear-here" div
+            $("#gifs-appear-here").prepend(instrumentDiv);
+          }
+          
+        });
+}
+      
 // Render images for existing buttons when button clicked
 // Adding click event listen listener to all buttons
-$("button").on("click", function() {
-  
-  // Grabbing and storing the data-instrument property value from the button
-  var buttonInstrument = $(this).attr("data-instrument");
-
-  // Constructing a queryURL using the instrument name, limit the images returned to 10
-  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-  buttonInstrument + "&api_key=dc6zaTOxFJmzC&limit=10";
-
-  // Performing an AJAX request with the queryURL
-  $.ajax({
-    url: queryURL,
-    method: "GET"
-  })
-    // After data comes back from the request
-    .then(function(response) {
-      // Deleting the buttons prior to adding new instruments
-      // (this is necessary otherwise you will have repeat buttons)
-      $("#buttons-view").empty();
-      console.log(queryURL);
-
-      console.log(response);
-      // storing the data from the AJAX request in the results variable
-      var results = response.data;
-
-      // Looping through each result item
-      for (var i = 0; i < results.length; i++) {
-
-        // Creating and storing a div tag
-        var instrumentDiv = $("<div>");
-
-        // Creating a paragraph tag with the result item's rating
-        var p = $("<p>").text("Rating: " + results[i].rating);
-
-        // Creating and storing an image tag
-        var instrumentImage = $("<img>");
-        instrumentImage.addClass("gif");
-        // Setting the src attribute of the image to a property pulled off the result item
-        instrumentImage.attr("src", results[i].images.original_still.url);
-        // Setting the data-still attribute of the image
-        instrumentImage.attr("data-still", results[i].images.original_still.url);
-        // Setting the data-animate attribute of the image
-        instrumentImage.attr("data-animate", results[i].images.fixed_height.url);
-        // Setting the data-state attribute of the image to still
-        instrumentImage.attr("data-state","still");
-        // Appending the paragraph and image tag to the instrumentDiv
-        instrumentDiv.append(instrumentImage);
-        instrumentDiv.append(p);
-
-        // Prependng the instrumentDiv to the HTML page in the "#gifs-appear-here" div
-        $("#gifs-appear-here").prepend(instrumentDiv);
-      }
-    });
-});
+// $("button").on("click", function() {
+    
+//     });
 
 // Toggle animation by clicking on image (If still, animate. If animated, make still.)
 $(document).on("click", ".gif",function() {
@@ -91,7 +102,7 @@ function renderButtons() {
     // Adding a class of instrument to our button
     a.addClass("instrument-btn");
     // Adding a data-attribute
-    a.attr("data-instrument", instruments[i]);
+    a.attr("data-name", instruments[i]);
     // Providing the initial button text
     a.text(instruments[i]);
     console.log("a: " + a);
@@ -118,8 +129,8 @@ $("#add-instrument").on("click", function(event) {
 });
 
 // Function for displaying the instrument info
-// Using $(document).on instead of $(".instrument").on to add event listeners to dynamically generated elements
-$(document).on("click", ".instrument-btn", false);
+// Using $(document).on instead of $(".instrument-btn").on to add event listeners to dynamically generated elements
+$(document).on("click", ".instrument-btn", displayInstrumentInfo);
 
 // Calling the renderButtons function to display the initial buttons
 renderButtons();
