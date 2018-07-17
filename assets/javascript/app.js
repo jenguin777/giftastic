@@ -62,12 +62,6 @@ function displayInstrumentInfo() {
           
         });
 }
-      
-// Render images for existing buttons when button clicked
-// Adding click event listen listener to all buttons
-// $("button").on("click", function() {
-    
-//     });
 
 // Toggle animation by clicking on image (If still, animate. If animated, make still.)
 $(document).on("click", ".gif",function() {

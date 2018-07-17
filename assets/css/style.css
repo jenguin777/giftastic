@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box
+}
+
+body {
+    background-color: #b9e4f5;
+    font-family: 'Angkor';font-size: 22px;
+    margin: 30px;
+ }
+
+button, input, label {
+    margin: 10px;
+ }
+
+ img {
+    height: 250px;
+    width: 250px;
+    margin: 10px auto;
+  }
