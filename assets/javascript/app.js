@@ -118,6 +118,9 @@ $("#add-instrument").on("click", function(event) {
   instruments.push(instrument);
   console.log(instruments);
 
+  // Clear the text input field upon clicking Submit
+  $("input:text").val("");
+
   // Calling renderButtons which handles the processing of our movie array
   renderButtons();
 });
