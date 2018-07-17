@@ -2,6 +2,10 @@
     box-sizing: border-box
 }
 
+container {
+    width: 90%;
+}
+
 body {
     background-color: #b9e4f5;
     font-family: 'Angkor';font-size: 22px;
@@ -16,4 +20,5 @@ button, input, label {
     height: 250px;
     width: 250px;
     margin: 10px auto;
+    border: solid 1px black;
   }
